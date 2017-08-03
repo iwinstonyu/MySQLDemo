@@ -250,3 +250,6 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+
+/External/boost_1_63_0/
+/External/MySQLCpp_1_1_9/lib/

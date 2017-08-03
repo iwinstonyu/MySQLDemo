@@ -257,8 +257,42 @@ void ChkHero2(SDBInfo db)
 	fclose(fp);
 }
 
+//class Base
+//{
+//public:
+//	void a(float x) { cout << "Base::a(float) " << x << endl; }
+//	void b(float x) { cout << "Base::b(float) " << x << endl; }
+//};
+//class Derived : public Base
+//{
+//public:
+//	void a(int x) { cout << "Derived::a(int) " << x << endl; }
+//	void b(float x) { cout << "Derived::b(float) " << x << endl; }
+//};
+
+int sum(int a, int b)
+{
+	return a + b;
+}
+
 int main()
 {
+	//Derived d;
+	//Base *pb = &d;
+	//Derived *pd = &d;
+
+	//pb->a(3.14f); // Base::a(float) 3.14
+	//pd->a(3.14f); // Base::a(float) 3.14
+	//pb->b(3.14f); // Base::b(float) 3.14
+	//pd->b(3.14f); // Derived::b(float) 3.14
+
+	const int a = 10;
+	int *p = (int*)(&a);
+	*p = 20;
+	cout << "a: " << a << " *p:" << *p << endl;
+
+	int(*func)(int, int) = sum;
+
 	SDBInfo db;
 	db.user = "lp";
 	db.pwd = "123456";

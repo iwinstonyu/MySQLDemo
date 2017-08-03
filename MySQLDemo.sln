@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MySQLDemo", "MySQLDemo\MySQLDemo.vcxproj", "{026B640B-4924-4060-B120-40D0A4F4CB68}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MySQLDemo2", "MySQLDemo2\MySQLDemo2.vcxproj", "{8912E045-797B-43AD-8ACC-5FFA3043F2ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{026B640B-4924-4060-B120-40D0A4F4CB68}.Release|x64.Build.0 = Release|x64
 		{026B640B-4924-4060-B120-40D0A4F4CB68}.Release|x86.ActiveCfg = Release|Win32
 		{026B640B-4924-4060-B120-40D0A4F4CB68}.Release|x86.Build.0 = Release|Win32
+		{8912E045-797B-43AD-8ACC-5FFA3043F2ED}.Debug|x64.ActiveCfg = Debug|x64
+		{8912E045-797B-43AD-8ACC-5FFA3043F2ED}.Debug|x64.Build.0 = Debug|x64
+		{8912E045-797B-43AD-8ACC-5FFA3043F2ED}.Debug|x86.ActiveCfg = Debug|Win32
+		{8912E045-797B-43AD-8ACC-5FFA3043F2ED}.Debug|x86.Build.0 = Debug|Win32
+		{8912E045-797B-43AD-8ACC-5FFA3043F2ED}.Release|x64.ActiveCfg = Release|x64
+		{8912E045-797B-43AD-8ACC-5FFA3043F2ED}.Release|x64.Build.0 = Release|x64
+		{8912E045-797B-43AD-8ACC-5FFA3043F2ED}.Release|x86.ActiveCfg = Release|Win32
+		{8912E045-797B-43AD-8ACC-5FFA3043F2ED}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
