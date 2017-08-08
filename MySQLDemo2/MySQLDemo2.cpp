@@ -133,15 +133,22 @@ void Example3()
 		con->setSchema("lobbyplatformpve");
 
 		stmt = con->createStatement();
-		res = stmt->executeQuery("select * from account_list");
-		int count = 0;
+		res = stmt->executeQuery("call TestMoreResult()");
 		while (res->next()) {
-			/* Access column data by numeric offset, 1 is the first column */
-			if( count++ < 100 )
-				cout << res->getUInt(1) << endl;
+			cout << res->getUInt(1) << endl;
 		}
 
-		while (stmt->getMoreResults());
+		cout << endl;
+
+		while (stmt->getMoreResults()) stmt->getResultSet();
+
+		if (stmt->getMoreResults())
+		{
+			res = stmt->getResultSet();
+			while (res->next()) {
+				cout << res->getUInt(1) << endl;
+			}
+		}
 
 		delete res;
 		delete stmt;
