@@ -111,6 +111,9 @@ void Example1()
 		cout << " (MySQL error code: " << e.getErrorCode();
 		cout << ", SQLState: " << e.getSQLState() << " )" << endl;
 	}
+	catch (...) {
+
+	}
 
 	cout << endl;
 }
@@ -140,6 +143,8 @@ void Example3()
 
 		cout << endl;
 
+		stmt->execute("update test set author=\'test2\' where id=1");
+
 		while (stmt->getMoreResults()) stmt->getResultSet();
 
 		if (stmt->getMoreResults())
@@ -166,9 +171,62 @@ void Example3()
 	cout << endl;
 }
 
+void Example4()
+{
+	cout << endl;
+	cout << "Running 'select * from account_list'" << endl;
+
+	sql::Driver *driver;
+	sql::Connection *con;
+	sql::Statement *stmt;
+	sql::ResultSet *res = NULL;
+
+	/* Create a connection */
+	driver = get_driver_instance();
+	con = driver->connect("tcp://192.168.19.64:3307", "lp", "123");
+	/* Connect to the MySQL test database */
+	con->setSchema("lobbyplatformpve");
+
+	stmt = con->createStatement();
+
+	try {
+		stmt->execute("call AppendMail ( 0 , '' , 9030653 , '1' , 46 , 0 , '' , '\' , 1708181257 , 1505624249 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , @_last_id ) ");
+		while (res->next()) {
+			cout << res->getUInt(1) << endl;
+		}
+
+		cout << endl;
+
+		while (stmt->getMoreResults()) stmt->getResultSet();
+
+		if (stmt->getMoreResults())
+		{
+			res = stmt->getResultSet();
+			while (res->next()) {
+				cout << res->getUInt(1) << endl;
+			}
+		}
+	}
+	catch (sql::SQLException &e) {
+		cout << "# ERR: SQLException in " << __FILE__;
+		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
+		cout << "# ERR: " << e.what();
+		cout << " (MySQL error code: " << e.getErrorCode();
+		cout << ", SQLState: " << e.getSQLState() << " )" << endl;
+
+		while (stmt->getMoreResults()) stmt->getResultSet();
+	}
+
+	if(res) delete res;
+	delete stmt;
+	delete con;
+
+	cout << endl;
+}
+
 int main(void)
 {
-	Example3();
+	Example4();
 
 	system("pause");
 
