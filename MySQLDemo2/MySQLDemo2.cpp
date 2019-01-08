@@ -2,6 +2,7 @@
 //
 
 #include "stdafx.h"
+#include <vector>
 
 #include "mysql_connection.h"
 
@@ -224,9 +225,98 @@ void Example4()
 	cout << endl;
 }
 
+void Example5()
+{
+	//cout << endl;
+	//cout << "Running 'select * from account_list'" << endl;
+
+	sql::Driver *driver;
+	sql::Connection *con;
+	sql::Statement *stmt;
+	sql::ResultSet *res = NULL;
+
+	/* Create a connection */
+	driver = get_driver_instance();
+	con = driver->connect("tcp://127.0.0.1:3307", "lp", "123");
+	/* Connect to the MySQL test database */
+	con->setSchema("lobby_slg_qa1");
+
+	stmt = con->createStatement();
+
+	try {
+		string query = "select 'hello world'";
+		res = stmt->executeQuery(" select ''hello world'");
+		cout << "Start result" << endl;
+		while (res->next()) {
+			cout << res->getUInt(1) << endl;
+		}
+		cout << "End result" << endl;
+		cout << endl;
+
+		while (stmt->getMoreResults()) stmt->getResultSet();
+
+		if (stmt->getMoreResults())
+		{
+			res = stmt->getResultSet();
+			while (res->next()) {
+				cout << res->getUInt(1) << endl;
+			}
+		}
+	}
+	catch (sql::SQLException &e) {
+		cout << "# ERR: SQLException in " << __FILE__;
+		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
+		cout << "# ERR: " << e.what();
+		cout << " (MySQL error code: " << e.getErrorCode();
+		cout << ", SQLState: " << e.getSQLState() << " )" << endl;
+
+		while (stmt->getMoreResults()) stmt->getResultSet();
+	}
+	catch (std::exception& e)
+	{
+		cout << "Exception: " << e.what() << endl;
+	}
+
+	if (res) delete res;
+	delete stmt;
+	delete con;
+
+	cout << endl;
+}
+
+inline string EscapeProcVar(const string& str)
+{
+	vector<char> escapeVec(str.length() * 2 + 1, 0);
+	size_t idx = 0;
+	for (size_t i = 0; i < str.length(); ++i) {
+		switch (str[i])
+		{
+		case '\\':
+		case '\'':
+			escapeVec[idx++] = '\\';
+		default:
+			break;
+		}
+		escapeVec[idx++] = str[i];
+	}
+	return string(escapeVec.begin(), escapeVec.begin() + idx);
+}
+
 int main(void)
 {
-	Example4();
+	vector<string> strs;
+	strs.push_back("123");
+	strs.push_back("'hello world");
+	strs.push_back("\\hello world");
+	for (auto it = strs.begin(); it != strs.end(); ++it) {
+		auto& str = *it;
+
+		string escapeStr = EscapeProcVar(str);
+		cout << "Before: " << str << " " << str.length() << endl;
+		cout << "After: " << escapeStr << " " << escapeStr.length() << endl;
+	}
+
+	//Example5();
 
 	system("pause");
 
